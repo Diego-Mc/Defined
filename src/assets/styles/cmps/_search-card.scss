@@ -1,0 +1,30 @@
+.search-card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  .results {
+    display: flex;
+    flex-direction: column;
+
+    .result {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      &:hover {
+        span {
+          color: $main-dark;
+        }
+      }
+
+      p {
+        font-size: rem(12px);
+        line-height: 0;
+      }
+      span {
+        font-size: rem(16px);
+        color: $main-dark-50;
+      }
+    }
+  }
+}

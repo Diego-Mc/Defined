@@ -1,0 +1,8 @@
+.home-view {
+  .home-sections {
+    @include grid();
+    > * {
+      grid-column: span 6;
+    }
+  }
+}

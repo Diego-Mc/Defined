@@ -1,4 +1,5 @@
 import React from 'react'
+import { Route, Routes } from 'react-router-dom'
 import { ReactComponent as Logo } from '../assets/imgs/defined-logo.svg'
 import { SearchBar } from './SearchBar'
 
@@ -13,7 +14,16 @@ export const Header = () => {
         <Logo />
         <h1>Defined</h1>
       </section>
-      <SearchBar placeholder="Search a term here" onChange={onChange} />
+      <Routes>
+        <Route exact path="/" element={null} />
+        <Route
+          path="/*"
+          element={
+            <SearchBar placeholder="Search a term here" onChange={onChange} />
+          }
+        />
+      </Routes>
+
       <section className="user">
         <span className="material-symbols-outlined">account_circle</span>
       </section>

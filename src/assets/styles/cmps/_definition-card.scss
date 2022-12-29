@@ -1,0 +1,24 @@
+.definition-card {
+  font-size: rem(12px);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  .term-title {
+    font-size: rem(28px);
+  }
+  .term-syllables {
+    // font-size: rem(10px);
+  }
+  .definition-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    .title {
+      font-weight: 500;
+      color: $main-dark-50;
+    }
+    ol {
+      padding-left: 24px;
+    }
+  }
+}
