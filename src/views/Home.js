@@ -1,9 +1,19 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { DefinitionCard } from '../cmps/DefinitionCard'
 import { Hero } from '../cmps/Hero'
 import { SearchCard } from '../cmps/SearchCard'
+import { dictionaryService } from '../services/dictionary.service'
 
 export const Home = () => {
+  const [wordOfTheDay, setWordOfTheDay] = useState(null)
+
+  useEffect(() => {
+    ;(async () => {
+      const wordOfTheDay = await dictionaryService.getById('voluminous') //TODO: change.. & use memo
+      setWordOfTheDay(wordOfTheDay)
+    })()
+  }, [])
+
   return (
     <main className="home-view">
       <Hero />
@@ -13,7 +23,7 @@ export const Home = () => {
         // synonym lookup
       }
       <section className="home-sections">
-        <DefinitionCard />
+        <DefinitionCard term={wordOfTheDay} />
         <SearchCard />
       </section>
     </main>

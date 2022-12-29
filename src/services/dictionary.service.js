@@ -2,6 +2,7 @@
 
 //https://random-word-api.herokuapp.com/word  => to fetch random word (word of the day)
 
+import axios from 'axios'
 import { storageService } from './async-storage.service.js'
 
 const STORAGE_KEY = 'dictionary'
@@ -15,6 +16,8 @@ window.cs = dictionaryService
 async function query({ search }) {
   return Promise.resolve(safeResult)
 
+  //get index 0, if has HOM, get index 1, if has hom get index 2...
+
   var dictionaries = await storageService.query(STORAGE_KEY)
   const regex = new RegExp(search, 'i')
   dictionaries = dictionaries.filter(
@@ -23,10 +26,117 @@ async function query({ search }) {
   return dictionaries
 }
 
-function getById(dictionaryId) {
-  return Promise.resolve(response)
+async function getById(dictionaryId) {
+  return Promise.resolve(_cleanResponse(response))
+  //TODO: below works! try to useMemo for this?
+  console.log('getting from API')
+  //TODO: move to backend
+  //TODO: try/catch
+  const { data } = await axios.get(
+    `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${dictionaryId}?key=${process.env.REACT_APP_DICTIONARY_API_KEY}`
+  )
+
+  let term = _cleanResponse(data[0])
+  for (let i = 1; i < data.length; i++) {
+    if (!data[i]?.hom) break
+    term = _cleanResponse(data[i], term)
+  }
+
+  console.log('termm', term)
+  return Promise.resolve(term)
+
+  // const data = await httpService.get(
+  //   `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${dictionaryId}?key=${process.env.REACT_APP_DICTIONARY_API_KEY}`
+  // )
 
   return storageService.get(STORAGE_KEY, dictionaryId)
+}
+
+function _cleanResponse(
+  {
+    meta,
+    hwi: { hw: syllablesStr, prs: presentations },
+    fl: definitionType,
+    def: _definitions,
+  },
+  prev = { definitions: [] }
+) {
+  //goal:
+  /*
+  id: 'voluminous',
+  syllables: ['vo','lu','mi','nous'],
+  audio: '[subdirectory]/[base filename]',
+  definitions: [
+    {
+      type: 'noun',
+      definition: ['a plant..', 'anything I said']
+    },
+    {
+      type: 'adjective',
+      definition: ['an aircraft..']
+    }
+  ]
+  */
+
+  const getId = ({ id }) => {
+    if (!id.includes(':')) return id
+
+    const colonIdx = id.indexOf(':')
+    return id.slice(0, colonIdx)
+  }
+
+  const getSyllables = (syllablesStr) => {
+    if (!syllablesStr.includes('*')) return [syllablesStr]
+    else return syllablesStr.split('*')
+  }
+
+  const getAudioFileName = (presentations) => {
+    if (!presentations || !presentations[0]) return prev?.audio ?? null
+    const {
+      sound: { audio },
+    } = presentations[0]
+    let sub
+
+    if (audio.startsWith('bix')) sub = 'bix'
+    else if (audio.startsWith('gg')) sub = 'gg'
+    else if (/^[0-9_'"$%&]/.test(audio)) sub = 'number'
+    else sub = audio.charAt(0)
+
+    return `${sub}/${audio}`
+  }
+
+  const getDefinition = (_definitions) => {
+    const cleanupText = (text) => {
+      const tagPattern = /{[^|}]+}/g
+      const placeholdersPattern = /\{[^|}]+\|([^}]+)\}/g
+
+      text = text.replace(tagPattern, '')
+      text = text.replace(placeholdersPattern, '$1')
+      text = text.replaceAll('|', '')
+      return text
+    }
+    const defs = _definitions[0].sseq.map((_def) =>
+      cleanupText(_def[0][1].dt[0][1])
+    )
+    return defs
+  }
+
+  let definitions = prev.definitions
+
+  const getDefinitions = (_definitions) => {
+    definitions.push({
+      type: definitionType,
+      definition: getDefinition(_definitions),
+    })
+    return definitions
+  }
+
+  return {
+    id: getId(meta),
+    syllables: getSyllables(syllablesStr),
+    audio: getAudioFileName(presentations),
+    definitions: getDefinitions(_definitions),
+  }
 }
 
 const response = {

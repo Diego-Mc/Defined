@@ -2,6 +2,7 @@ import { Route, HashRouter as Router, Routes } from 'react-router-dom'
 import './assets/styles/main.scss'
 import { Header } from './cmps/Header'
 import { Home } from './views/Home'
+import { TermDetails } from './views/TermDetails'
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/dictionary/:term" element={null} />
+          <Route path="/dictionary/:term" element={<TermDetails />} />
           <Route path="/profile" element={null}>
             <Route path="bookmarks" element={null} />
             <Route path="history" element={null} />
