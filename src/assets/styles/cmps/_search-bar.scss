@@ -1,0 +1,37 @@
+.search-bar {
+  position: relative;
+  min-width: 400px;
+  height: 42px;
+  .icon {
+    position: absolute;
+    z-index: 1;
+    color: $main-dark-20;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .input {
+    position: absolute;
+    inset: 0;
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  .search-icon {
+    left: 12px;
+  }
+
+  .clear-icon {
+    right: 12px;
+    opacity: 1;
+    transition: opacity 0.1s ease-in;
+    cursor: pointer;
+
+    &:hover {
+      color: $main-dark-50;
+    }
+  }
+
+  .input:placeholder-shown + .clear-icon {
+    opacity: 0;
+  }
+}
