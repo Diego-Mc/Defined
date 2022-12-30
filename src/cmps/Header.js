@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import { ReactComponent as Logo } from '../assets/imgs/defined-logo.svg'
 import { SearchBar } from './SearchBar'
 
@@ -8,9 +8,11 @@ export const Header = () => {
     console.log('searchValue', searchValue)
   }
 
+  const navigate = useNavigate()
+
   return (
     <header className="main-header">
-      <section className="logo">
+      <section onClick={() => navigate('/')} className="logo">
         <Logo />
         <h1>Defined</h1>
       </section>
@@ -24,7 +26,7 @@ export const Header = () => {
         />
       </Routes>
 
-      <section className="user">
+      <section onClick={() => navigate('/profile')} className="user">
         <span className="material-symbols-outlined">account_circle</span>
       </section>
     </header>

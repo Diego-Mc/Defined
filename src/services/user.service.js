@@ -40,6 +40,7 @@ async function login(userCred) {
     // socketService.login(user._id)
     return _saveLocalUser(user)
   }
+  // TODO: add else?
 }
 
 async function signup(userCred) {
@@ -69,7 +70,7 @@ async function changeScore(by) {
 function _saveLocalUser(user) {
   user = {
     _id: user._id,
-    fullname: user.fullname,
+    fullName: user.fullName,
     imgUrl: user.imgUrl,
     score: user.score,
   }
