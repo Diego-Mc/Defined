@@ -22,6 +22,11 @@ export const Profile = () => {
       navigate('bookmarks', { replace: true })
   }, [location])
 
+  const handleLogout = async () => {
+    await userService.logout()
+    navigate('/')
+  }
+
   return (
     <main className="profile-view">
       <section className="nav">
@@ -39,6 +44,10 @@ export const Profile = () => {
             <span className="material-symbols-outlined icon">settings</span>
             <span>Settings</span>
           </NavLink>
+          <span className="logout-btn card" onClick={handleLogout}>
+            <span className="material-symbols-outlined icon">logout</span>
+            <span>Log out</span>
+          </span>
         </nav>
       </section>
       <section className="route">

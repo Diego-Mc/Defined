@@ -1,7 +1,7 @@
 .profile-view {
   @include grid();
   .nav {
-    grid-column: span 4;
+    grid-column: span 3;
     .title {
       font-size: rem(24px);
       margin-bottom: 24px;
@@ -21,17 +21,51 @@
         .icon {
           font-size: rem(18px);
         }
+        &:hover {
+          color: $main-light;
+        }
         &.active {
           background-color: $main-light;
           color: #fff;
         }
       }
+
+      .logout-btn {
+        transition: all 0.1s;
+        font-size: rem(14px);
+        display: flex;
+        align-items: center;
+        background-color: unset;
+        box-shadow: unset;
+        padding: 12px;
+        cursor: pointer;
+        gap: 8px;
+        color: $main-dark-50;
+        .icon {
+          font-size: rem(18px);
+        }
+        &:hover {
+          color: $main-dark;
+          color: $main;
+          color: tomato;
+        }
+      }
     }
   }
-}
 
-.profile-settings {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+  .route {
+    grid-column: 4 / -1;
+  }
+
+  .profile-section {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .profile-sections-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
 }

@@ -14,8 +14,7 @@ export const ProfileSettings = () => {
     ;(async () => {
       const user = await userService.getLoggedInUser()
       const newFields = {
-        username:
-          user.username || 'placeholder //TODO: add username to loggerinuser',
+        username: user.username,
         profilePic: user.imgUrl,
       }
       setFields((prevFields) => ({ ...prevFields, ...newFields }))
@@ -23,7 +22,7 @@ export const ProfileSettings = () => {
   }, [])
 
   return (
-    <section className="profile-settings">
+    <section className="profile-settings profile-sections-wrapper">
       <form className="auth-form card">
         <h4>Update Password</h4>
         <label htmlFor="password">Current Password</label>
