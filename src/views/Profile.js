@@ -1,15 +1,49 @@
 import React, { useEffect } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useHistory, useNavigation, useSearchParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+import { NavLink, Outlet } from 'react-router-dom'
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import { userService } from '../services/user.service'
 
 export const Profile = () => {
   const navigate = useNavigate()
+  const location = useLocation()
   useEffect(() => {
-    console.log('hey')
     const loggedInUser = userService.getLoggedInUser()
     console.log('loggedinuser', loggedInUser)
-    if (!loggedInUser) navigate('/login')
+    if (!loggedInUser) return navigate('/login', { replace: true })
+    if (location.pathname === '/profile')
+      navigate('bookmarks', { replace: true })
   }, [])
 
-  return <div>Profile</div>
+  useEffect(() => {
+    if (location.pathname === '/profile')
+      navigate('bookmarks', { replace: true })
+  }, [location])
+
+  return (
+    <main className="profile-view">
+      <section className="nav">
+        <h2 className="title">My Profile</h2>
+        <nav>
+          <NavLink to="bookmarks" className="nav-link card">
+            <span className="material-symbols-outlined icon">bookmarks</span>
+            <span>Bookmarks</span>
+          </NavLink>
+          <NavLink to="history" className="nav-link card">
+            <span className="material-symbols-outlined icon">history</span>
+            <span>History</span>
+          </NavLink>
+          <NavLink to="settings" className="nav-link card">
+            <span className="material-symbols-outlined icon">settings</span>
+            <span>Settings</span>
+          </NavLink>
+        </nav>
+      </section>
+      <section className="route">
+        <Outlet />
+      </section>
+    </main>
+  )
 }

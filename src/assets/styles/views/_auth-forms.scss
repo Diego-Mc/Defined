@@ -27,6 +27,13 @@
     font-size: rem(12px);
     letter-spacing: 1px;
     text-transform: uppercase;
+    > a {
+      transition: color 0.1s ease-out;
+
+      &:hover {
+        color: $main-light;
+      }
+    }
     button {
       letter-spacing: 1px;
       text-transform: uppercase;
@@ -35,6 +42,11 @@
       box-shadow: $shadow;
       background-color: $main-dark;
       color: white;
+      transition: background-color 0.1s ease-out;
+
+      &:hover {
+        background-color: $main-light;
+      }
     }
   }
 }

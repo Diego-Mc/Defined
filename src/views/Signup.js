@@ -15,10 +15,11 @@ export const Signup = () => {
     handleChange
   )
 
-  const handleSubmit = (ev) => {
+  const handleSubmit = async (ev) => {
     ev.preventDefault()
     console.log('submitting this:', { ...fields.current })
-    userService.signup({ ...fields.current })
+    const user = await userService.signup({ ...fields.current })
+    console.log('successful!', user)
   }
 
   return (

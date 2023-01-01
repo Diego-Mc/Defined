@@ -6,6 +6,7 @@ import { Login } from './views/Login'
 import { Signup } from './views/Signup'
 import { Profile } from './views/Profile'
 import { TermDetails } from './views/TermDetails'
+import { ProfileSettings } from './cmps/ProfileSettings'
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
           <Route path="/profile" element={<Profile />}>
             <Route path="bookmarks" element={null} />
             <Route path="history" element={null} />
-            <Route path="settings" element={null} />
+            <Route path="settings" element={<ProfileSettings />} />
           </Route>
         </Routes>
         {/* footer */}
