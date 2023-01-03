@@ -2,6 +2,8 @@
   position: relative;
   min-width: 400px;
   height: 42px;
+  transform-style: preserve-3d;
+
   .icon {
     position: absolute;
     z-index: 1;
@@ -14,6 +16,7 @@
     inset: 0;
     padding-left: 48px;
     padding-right: 48px;
+    background-color: #fff;
   }
 
   .search-icon {
@@ -23,6 +26,7 @@
   .clear-icon {
     right: 12px;
     opacity: 1;
+    pointer-events: auto;
     transition: opacity 0.1s ease-in;
     cursor: pointer;
 
@@ -33,5 +37,140 @@
 
   .input:placeholder-shown + .clear-icon {
     opacity: 0;
+    pointer-events: none;
+  }
+
+  input:focus-visible ~ .autocomplete,
+  .autocomplete:hover {
+    top: calc(100% + 12px);
+    max-height: 400%;
+    pointer-events: auto;
+  }
+
+  .autocomplete {
+    position: absolute;
+    pointer-events: none;
+    box-shadow: $shadow-dark;
+    left: 0;
+    right: 0;
+    top: 0;
+    // margin-top: 12px;
+    padding-block: 16px;
+    height: fit-content;
+    font-weight: 500;
+    text-transform: capitalize;
+    color: $main-dark-50;
+
+    transform: translateZ(-10px);
+
+    max-height: 100%;
+    overflow: hidden;
+    // background-color: red;
+    transform-origin: top;
+    transition: all 0.3s;
+
+    .result {
+      &:hover p {
+        color: $main-dark;
+      }
+    }
+
+    .placeholder {
+      font-size: rem(14px);
+      display: flex;
+      align-items: center;
+      color: $main-dark-20;
+
+      flex-direction: column;
+      gap: 12px;
+      padding-block: 20px;
+
+      .dot-elastic {
+        position: relative;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        background-color: $main-dark-20;
+        color: $main-dark-20;
+        animation: dot-elastic 1s infinite linear;
+      }
+      .dot-elastic::before,
+      .dot-elastic::after {
+        content: '';
+        display: inline-block;
+        position: absolute;
+        top: 0;
+      }
+      .dot-elastic::before {
+        left: -15px;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        background-color: $main-dark-20;
+        color: $main-dark-20;
+        animation: dot-elastic-before 1s infinite linear;
+      }
+      .dot-elastic::after {
+        left: 15px;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        background-color: $main-dark-20;
+        color: $main-dark-20;
+        animation: dot-elastic-after 1s infinite linear;
+      }
+
+      @keyframes dot-elastic-before {
+        0% {
+          transform: scale(1, 1);
+        }
+        25% {
+          transform: scale(1, 1.5);
+        }
+        50% {
+          transform: scale(1, 0.67);
+        }
+        75% {
+          transform: scale(1, 1);
+        }
+        100% {
+          transform: scale(1, 1);
+        }
+      }
+      @keyframes dot-elastic {
+        0% {
+          transform: scale(1, 1);
+        }
+        25% {
+          transform: scale(1, 1);
+        }
+        50% {
+          transform: scale(1, 1.5);
+        }
+        75% {
+          transform: scale(1, 1);
+        }
+        100% {
+          transform: scale(1, 1);
+        }
+      }
+      @keyframes dot-elastic-after {
+        0% {
+          transform: scale(1, 1);
+        }
+        25% {
+          transform: scale(1, 1);
+        }
+        50% {
+          transform: scale(1, 0.67);
+        }
+        75% {
+          transform: scale(1, 1.5);
+        }
+        100% {
+          transform: scale(1, 1);
+        }
+      }
+    }
   }
 }

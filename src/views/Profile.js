@@ -1,29 +1,27 @@
 import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useNavigation, useSearchParams } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import { NavLink, Outlet } from 'react-router-dom'
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
+import { useEffectUpdate } from '../hooks/useEffectUpdate'
 import { userService } from '../services/user.service'
+import { logout } from '../store/user.actions'
 
 export const Profile = () => {
   const navigate = useNavigate()
   const location = useLocation()
-  useEffect(() => {
-    const loggedInUser = userService.getLoggedInUser()
-    console.log('loggedinuser', loggedInUser)
+  const dispatch = useDispatch()
+  const loggedInUser = useSelector(({ user }) => user)
+  console.log('log', loggedInUser, location)
+
+  useEffectUpdate(() => {
     if (!loggedInUser) return navigate('/login', { replace: true })
-    if (location.pathname === '/profile')
-      navigate('bookmarks', { replace: true })
-  }, [])
+  }, [loggedInUser])
 
-  useEffect(() => {
-    if (location.pathname === '/profile')
-      navigate('bookmarks', { replace: true })
-  }, [location])
-
-  const handleLogout = async () => {
-    await userService.logout()
+  const handleLogout = () => {
+    dispatch(logout())
     navigate('/')
   }
 

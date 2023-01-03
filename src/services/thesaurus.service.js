@@ -1,4 +1,4 @@
-// https://www.dictionaryapi.com/api/v3/references/collegiate/json/voluminous?key=your-api-key
+//https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${term}?key=${}
 
 //https://random-word-api.herokuapp.com/word  => to fetch random word (word of the day)
 

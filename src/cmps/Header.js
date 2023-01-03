@@ -1,16 +1,25 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import { ReactComponent as Logo } from '../assets/imgs/defined-logo.svg'
 import { userService } from '../services/user.service'
 import { SearchBar } from './SearchBar'
 
 export const Header = () => {
-  const onChange = (searchValue) => {
-    console.log('searchValue', searchValue)
-  }
+  const onChange = (searchValue) => {}
 
-  const loggedInUser = userService.getLoggedInUser()
-  console.log('loggedInUser:', loggedInUser)
+  // const [loggedInUser, setLoggedInUser] = useState(null)
+
+  // useEffect(() => {
+  //   ;(async () => {
+  //     const loggedInUser = await userService.getLoggedInUser()
+  //     setLoggedInUser((prev) => loggedInUser)
+  //   })()
+  // }, [])
+
+  const loggedInUser = useSelector(({ user }) => {
+    return user
+  })
 
   const navigate = useNavigate()
 

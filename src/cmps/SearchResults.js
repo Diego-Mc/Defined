@@ -1,19 +1,29 @@
 import React from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 
-export const SearchResults = ({ results }) => {
+export const SearchResults = ({
+  results,
+  placeholder = 'Start Typing To Generate Results',
+}) => {
   const navigate = useNavigate()
   return (
     <div className="results">
-      {results.map((result) => (
-        <article
-          key={result}
-          onClick={() => navigate(`dictionary/${result}`)}
-          className="result">
-          <span className="material-symbols-outlined">search</span>
-          <p>{result}</p>
-        </article>
-      ))}
+      {results ? (
+        results.map((result) => (
+          <article
+            key={result}
+            onClick={() => navigate(`/dictionary/${result}`)}
+            className="result">
+            <span className="material-symbols-outlined">search</span>
+            <p>{result}</p>
+          </article>
+        ))
+      ) : (
+        <span className="placeholder">
+          {placeholder}
+          <div className="dot-elastic"></div>
+        </span>
+      )}
     </div>
   )
 }

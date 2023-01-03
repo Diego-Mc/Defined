@@ -3,6 +3,16 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+  position: relative;
+
+  .bookmark-icon {
+    position: absolute;
+    right: 42px;
+    top: 42px;
+    font-size: rem(24px);
+    cursor: pointer;
+  }
+
   .term-title {
     font-size: rem(28px);
   }
