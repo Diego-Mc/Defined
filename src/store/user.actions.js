@@ -44,11 +44,11 @@ export const toggleBookmark = (term) => {
   }
 }
 
-export const addToHistory = (term) => {
+export const addToHistory = (term, category) => {
   return async (dispatch) => {
     try {
-      const updatedUser = await userService.addToHistory(term)
-      dispatch({ type: 'ADD_TO_HISTORY', term })
+      const updatedUser = await userService.addToHistory(term, category)
+      dispatch({ type: 'ADD_TO_HISTORY', term, category })
     } catch (err) {
       console.log('errr', err)
     }

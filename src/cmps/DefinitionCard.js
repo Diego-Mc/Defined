@@ -8,7 +8,6 @@ import { TermHeader } from './TermHeader'
 
 export const DefinitionCard = ({ term }) => {
   const isBookmarked = useSelector(({ user }) => {
-    console.log('fafa', user)
     if (!term) return
     return user?.bookmarks?.some(({ id }) => id === term.id)
   })

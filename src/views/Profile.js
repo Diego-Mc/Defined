@@ -14,7 +14,6 @@ export const Profile = () => {
   const location = useLocation()
   const dispatch = useDispatch()
   const loggedInUser = useSelector(({ user }) => user)
-  console.log('log', loggedInUser, location)
 
   useEffectUpdate(() => {
     if (!loggedInUser) return navigate('/login', { replace: true })

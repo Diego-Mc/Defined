@@ -1,8 +1,10 @@
 .search-bar {
   position: relative;
-  min-width: 400px;
+  // min-width: 400px;
   height: 42px;
   transform-style: preserve-3d;
+  width: 100%;
+  z-index: 400;
 
   .icon {
     position: absolute;
@@ -45,6 +47,7 @@
     top: calc(100% + 12px);
     max-height: 400%;
     pointer-events: auto;
+    outline-color: rgba(21, 5, 119, 0.05);
   }
 
   .autocomplete {
@@ -60,6 +63,7 @@
     font-weight: 500;
     text-transform: capitalize;
     color: $main-dark-50;
+    outline: 1px solid transparent;
 
     transform: translateZ(-10px);
 

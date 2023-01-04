@@ -15,7 +15,7 @@ export const dictionaryService = {
 window.cs = dictionaryService
 
 async function query({ search }) {
-  return Promise.resolve(safeResult)
+  // return Promise.resolve(safeResult)
 
   //get index 0, if has HOM, get index 1, if has hom get index 2...
 
@@ -54,7 +54,7 @@ async function query({ search }) {
 }
 
 async function getById(dictionaryId) {
-  return Promise.resolve(_cleanResponse(response))
+  // return Promise.resolve(_cleanResponse(response))
   //TODO: below works! try to useMemo for this?
   console.log('getting from API')
   //TODO: move to backend

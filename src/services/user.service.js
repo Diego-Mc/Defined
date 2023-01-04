@@ -38,15 +38,16 @@ async function toggleBookmark(term) {
   return await update(user)
 }
 
-async function addToHistory(term) {
+async function addToHistory(term, category) {
   let user = await getLoggedInUser()
 
-  let { history } = user
+  const { history } = user
   const HISTORY_LIMIT = 20 //max 20 results in history
-  history = [term, ...history.filter(({ id }) => id !== term.id)]
-  history = history.slice(0, HISTORY_LIMIT)
+  let categoryHistory = history[category] ?? []
+  categoryHistory = [term, ...categoryHistory.filter((t) => t !== term)]
+  categoryHistory = categoryHistory.slice(0, HISTORY_LIMIT)
 
-  user = { ...user, history }
+  user = { ...user, history: { ...history, [category]: categoryHistory } }
   return await update(user)
 }
 
@@ -79,7 +80,7 @@ async function signup(userCred) {
     userCred.imgUrl =
       'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png'
   userCred.bookmarks = []
-  userCred.history = []
+  userCred.history = {}
   // const user = await storageService.post('user', userCred)
   const user = await httpService.post('auth/signup', userCred)
   // socketService.login(user._id)

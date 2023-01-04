@@ -13,14 +13,19 @@ export const userReducer = (state = null, action) => {
           }
         : { ...state, bookmarks: [...bookmarks, action.term] }
     case 'ADD_TO_HISTORY':
-      let { history } = state
+      const { history } = state
       const HISTORY_LIMIT = 20 //max 20 results in history
-      history = [
+      let categoryHistory = history[action.category] ?? []
+      categoryHistory = [
         action.term,
-        ...history.filter(({ id }) => id !== action.term.id),
+        ...categoryHistory.filter((term) => term !== action.term),
       ]
-      history = history.slice(0, HISTORY_LIMIT)
-      return { ...state, history }
+      categoryHistory = categoryHistory.slice(0, HISTORY_LIMIT)
+      return {
+        ...state,
+        history: { ...history, [action.category]: categoryHistory },
+      }
+
     default:
       return state
   }

@@ -2,20 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import { ReactComponent as Logo } from '../assets/imgs/defined-logo.svg'
+import { useDictionarySearch } from '../hooks/useDictionarySearch'
 import { userService } from '../services/user.service'
 import { SearchBar } from './SearchBar'
 
 export const Header = () => {
-  const onChange = (searchValue) => {}
-
-  // const [loggedInUser, setLoggedInUser] = useState(null)
-
-  // useEffect(() => {
-  //   ;(async () => {
-  //     const loggedInUser = await userService.getLoggedInUser()
-  //     setLoggedInUser((prev) => loggedInUser)
-  //   })()
-  // }, [])
+  const [register] = useDictionarySearch()
 
   const loggedInUser = useSelector(({ user }) => {
     return user
@@ -31,12 +23,7 @@ export const Header = () => {
       </section>
       <Routes>
         <Route exact path="/" element={null} />
-        <Route
-          path="/*"
-          element={
-            <SearchBar placeholder="Search a term here" onChange={onChange} />
-          }
-        />
+        <Route path="/*" element={<SearchBar {...register} />} />
       </Routes>
 
       {loggedInUser ? (

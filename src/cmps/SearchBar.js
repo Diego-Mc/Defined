@@ -2,7 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { useEffectUpdate } from '../hooks/useEffectUpdate'
 import { SearchResults } from './SearchResults'
 
-export const SearchBar = ({ placeholder = 'Search', onChange, results }) => {
+export const SearchBar = ({
+  placeholder = 'Search',
+  onChange,
+  results,
+  onResultSelect,
+}) => {
   const [input, setInput] = useState('')
 
   useEffectUpdate(() => {
@@ -27,7 +32,7 @@ export const SearchBar = ({ placeholder = 'Search', onChange, results }) => {
         disabled_by_default
       </span>
       <section className="autocomplete card">
-        <SearchResults results={results} />
+        <SearchResults results={results} onResultSelect={onResultSelect} />
       </section>
     </form>
   )

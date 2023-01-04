@@ -1,17 +1,25 @@
 .main-hero {
   padding-block: 10vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // justify-content: center;
+  // gap: 6px;
+  @include grid();
   gap: 6px;
+  justify-items: center;
   svg {
     height: 12vh;
     width: 12vh;
+    grid-column: 1 / -1;
   }
   p {
+    grid-column: 1 / -1;
     font-size: rem(14px);
     color: $main-dark-50;
     text-transform: capitalize;
+  }
+  .search-bar {
+    grid-column: 4 / -4;
   }
 }
